@@ -3,7 +3,6 @@ package vault
 import (
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 
@@ -695,36 +694,36 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 
 	// Set the namespace to the token's namespace only for the
 	// child token creation
-	tokenInfo, err := client.Auth().Token().LookupSelf()
-	if err != nil {
-		return nil, err
-	}
-	if tokenNamespaceRaw, ok := tokenInfo.Data["namespace_path"]; ok {
-		tokenNamespace := tokenNamespaceRaw.(string)
-		if tokenNamespace != "" {
-			client.SetNamespace(tokenNamespace)
-		}
-	}
-
-	renewable := false
-	childTokenLease, err := client.Auth().Token().Create(&api.TokenCreateRequest{
-		DisplayName:    tokenName,
-		TTL:            fmt.Sprintf("%ds", d.Get("max_lease_ttl_seconds").(int)),
-		ExplicitMaxTTL: fmt.Sprintf("%ds", d.Get("max_lease_ttl_seconds").(int)),
-		Renewable:      &renewable,
-	})
-	if err != nil {
-		return nil, fmt.Errorf("failed to create limited child token: %s", err)
-	}
-
-	childToken := childTokenLease.Auth.ClientToken
-	policies := childTokenLease.Auth.Policies
-
-	log.Printf("[INFO] Using Vault token with the following policies: %s", strings.Join(policies, ", "))
-
-	// Set tht token to the generated child token
-	client.SetToken(childToken)
-
+	//tokenInfo, err := client.Auth().Token().LookupSelf()
+	//if err != nil {
+	//	return nil, err
+	//}
+	//if tokenNamespaceRaw, ok := tokenInfo.Data["namespace_path"]; ok {
+	//	tokenNamespace := tokenNamespaceRaw.(string)
+	//	if tokenNamespace != "" {
+	//		client.SetNamespace(tokenNamespace)
+	//	}
+	//}
+	//
+	//renewable := false
+	//childTokenLease, err := client.Auth().Token().Create(&api.TokenCreateRequest{
+	//	DisplayName:    tokenName,
+	//	TTL:            fmt.Sprintf("%ds", d.Get("max_lease_ttl_seconds").(int)),
+	//	ExplicitMaxTTL: fmt.Sprintf("%ds", d.Get("max_lease_ttl_seconds").(int)),
+	//	Renewable:      &renewable,
+	//})
+	//if err != nil {
+	//	return nil, fmt.Errorf("failed to create limited child token: %s", err)
+	//}
+	//
+	//childToken := childTokenLease.Auth.ClientToken
+	//policies := childTokenLease.Auth.Policies
+	//
+	//log.Printf("[INFO] Using Vault token with the following policies: %s", strings.Join(policies, ", "))
+	//
+	//// Set tht token to the generated child token
+	//client.SetToken(childToken)
+	//
 	// Set the namespace to the requested namespace, if provided
 	namespace := d.Get("namespace").(string)
 	if namespace != "" {
