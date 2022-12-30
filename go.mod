@@ -5,7 +5,7 @@ go 1.13
 require (
 	github.com/Azure/azure-sdk-for-go v29.0.0+incompatible
 	github.com/Azure/go-autorest v11.7.1+incompatible
-	github.com/aws/aws-sdk-go v1.25.3
+	github.com/aws/aws-sdk-go v1.33.0
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gosimple/slug v1.4.1
 	github.com/hashicorp/go-cleanhttp v0.5.1
