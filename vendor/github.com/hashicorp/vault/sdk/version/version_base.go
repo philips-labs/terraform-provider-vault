@@ -5,10 +5,13 @@ var (
 	GitCommit   string
 	GitDescribe string
 
+	// The compilation date. This will be filled in by the compiler.
+	BuildDate string
+
 	// Whether cgo is enabled or not; set at build time
 	CgoEnabled bool
 
-	Version           = "1.2.0"
+	Version           = "1.11.11"
 	VersionPrerelease = ""
 	VersionMetadata   = ""
 )
